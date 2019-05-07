@@ -44,12 +44,10 @@ class Generator {
         #endif
         """)
         
-        let frameworks = ["Logger", "SwiftGRPC", "SwiftProtobuf"]
+        let frameworks = ["Logger"]
         for framework in frameworks {
             println("import \(framework)")
         }
-        println()
-        printHelperMethods()
         
         for service in file.services {
             printClient(service)
