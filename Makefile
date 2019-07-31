@@ -2,7 +2,7 @@ all:
 	swift build $(CFLAGS) --product protoc-gen-zap --static-swift-stdlib -c release
 	cp .build/release/protoc-gen-zap .
 test:
-	protoc -I/usr/local/include -I. -I./googleapis --plugin=protoc-gen-custom=./protoc-gen-zap --custom_out=. rpc.proto
+	protoc -I/usr/local/include -I. -I./googleapis --plugin=protoc-gen-custom=./protoc-gen-zap --custom_out=. rpc.proto router.proto
 clean:
 	-rm -rf Packages
 	-rm -rf .build build

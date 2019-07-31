@@ -16,7 +16,7 @@ extension Generator {
     }
     
     private func printMockConnection(_ service: ServiceDescriptor) {
-        println("class Mock\(service.name)Connection: \(connectionProtocolName(service)) {")
+        println("final class Mock\(service.name)Connection: \(connectionProtocolName(service)) {")
         indent()
         for method in service.methods {
             switch streamingType(method) {
@@ -84,14 +84,14 @@ extension Generator {
 
     private func printStreamingConnection(_ service: ServiceDescriptor) {
         println("#if !REMOTEONLY")
-        println("class Streaming\(service.name)Connection: \(connectionProtocolName(service)) {")
+        println("final class Streaming\(service.name)Connection: \(connectionProtocolName(service)) {")
         indent()
         for method in service.methods {
             switch streamingType(method) {
             case .unary, .serverStreaming:
                 printMethodName(method, hasBody: true)
                 indent()
-                println("Lndmobile\(method.name)(try? request.serializedData(), LndCallback(completion))")
+                println("Lndmobile\(prefixName(service))\(method.name)(try? request.serializedData(), LndCallback(completion))")
                 outdent()
                 println("}")
             case .clientStreaming, .bidirectionalStreaming:

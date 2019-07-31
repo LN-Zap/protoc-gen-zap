@@ -111,5 +111,5 @@ iOSInjectionProject/
 protoc-gen-zap.xcodeproj/
 googleapis/
 /protoc-gen-zap
-rpc.proto
-rpc.zap.swift
+*.proto
+*.zap.swift

@@ -11,6 +11,16 @@ extension Generator {
         return service.name + "Connection"
     }
     
+    func prefixName(_ service: ServiceDescriptor) -> String {
+        switch service.name {
+        // don't add prefixes to `WalletUnlocker` and `Lightning` services
+        case "WalletUnlocker", "Lightning":
+            return ""
+        default:
+            return service.name
+        }
+    }
+    
     func methodFunctionName(_ method: MethodDescriptor) -> String {
         let name = method.name
         return name.prefix(1).lowercased() + name.dropFirst()
