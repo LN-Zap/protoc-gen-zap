@@ -12,6 +12,8 @@ extension Generator {
         println()
         printRpcConnection(service)
         println()
+        printRest(service)
+        println()
         printMockConnection(service)
     }
     
@@ -59,6 +61,7 @@ extension Generator {
                 println("completion(Result(value: \(methodFunctionName(method)), error: LndApiError.unknownError))")
                 outdent()
                 println("}")
+                println()
             case .clientStreaming, .bidirectionalStreaming:
                 printSkippedComment(method)
             }
@@ -94,6 +97,7 @@ extension Generator {
                 println("Lndmobile\(prefixName(service))\(method.name)(try? request.serializedData(), LndCallback(completion))")
                 outdent()
                 println("}")
+                println()
             case .clientStreaming, .bidirectionalStreaming:
                 printSkippedComment(method)
             }
@@ -136,6 +140,7 @@ extension Generator {
                 """)
                 outdent()
                 println("}")
+                println()
                 
                 let callName = nameForPackageServiceMethod(service, method) + "Call"
                 
@@ -156,10 +161,6 @@ extension Generator {
         }
         outdent()
         println("}")
-    }
-    
-    private func printMethodName(_ method: MethodDescriptor, hasBody: Bool) {
-        println("func \(methodFunctionName(method))(_ request: \(protoMessageName(method.inputType)), completion: @escaping ApiCompletion<\(methodOutputName(method))>)\(hasBody ? " {" : "")")
     }
     
     private func printSkippedComment(_ method: MethodDescriptor) {

@@ -34,6 +34,10 @@ extension Generator {
     func protoMessageName(_ descriptor: SwiftProtobufPluginLibrary.Descriptor) -> String {
         return SwiftProtobufNamer().fullName(message: descriptor)
     }
+    
+    func protoMessageName(_ descriptor: EnumDescriptor) -> String {
+        return SwiftProtobufNamer().fullName(enum: descriptor)
+    }
    
     func nameForPackageServiceMethod(_ service: ServiceDescriptor, _ method: MethodDescriptor) -> String {
         return nameForPackageService(service) + method.name
@@ -45,5 +49,9 @@ extension Generator {
         } else {
             return service.name
         }
+    }
+    
+    func printMethodName(_ method: MethodDescriptor, hasBody: Bool) {
+        println("func \(methodFunctionName(method))(_ request: \(protoMessageName(method.inputType)), completion: @escaping ApiCompletion<\(methodOutputName(method))>)\(hasBody ? " {" : "")")
     }
 }
